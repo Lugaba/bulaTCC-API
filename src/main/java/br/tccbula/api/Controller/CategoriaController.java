@@ -24,6 +24,7 @@ public class CategoriaController {
 
     @RequestMapping(value = "categorias", method = RequestMethod.POST)
     public ResponseEntity<Categoria> createItem(@Valid @RequestBody Categoria categoria) {
+        repository.save(categoria);
         return new ResponseEntity<Categoria>(categoria, HttpStatus.OK);
     }
 

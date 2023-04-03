@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.tccbula.api.DTO.BulaDTO;
 import br.tccbula.api.Entity.Bula;
 import br.tccbula.api.Entity.Categoria;
 import br.tccbula.api.Entity.Fabricante;
@@ -33,7 +35,7 @@ public class BulaController {
     private CategoriaRepository categoriaRepository;
 
     @RequestMapping(value = "fabricantes/{fabricanteID}/categorias/{categoriaID}/bulas", method = RequestMethod.POST)
-    public ResponseEntity<Bula> createItem(@Valid @RequestBody Bula bula,
+    public ResponseEntity<BulaDTO> createItem(@Valid @RequestBody Bula bula,
             @PathVariable(value = "fabricanteID") long fabricanteID,
             @PathVariable(value = "categoriaID") long categoriaID) {
         Fabricante fabricante = fabricanteRepository.getReferenceById(fabricanteID);
@@ -41,8 +43,12 @@ public class BulaController {
         if (categoria != null && fabricante != null) {
             bula.setCategoria(categoria);
             bula.setFabricante(fabricante);
+            System.out.print(bula.getFabricante());
             repository.save(bula);
-            return new ResponseEntity<Bula>(bula, HttpStatus.OK);
+
+            ModelMapper modelMapper = new ModelMapper();
+            BulaDTO bulaDTO = modelMapper.map(bula, BulaDTO.class);
+            return new ResponseEntity<BulaDTO>(bulaDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

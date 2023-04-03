@@ -24,6 +24,7 @@ public class FabricanteController {
 
     @RequestMapping(value = "fabricantes", method = RequestMethod.POST)
     public ResponseEntity<Fabricante> createItem(@Valid @RequestBody Fabricante fabricante) {
+        repository.save(fabricante);
         return new ResponseEntity<Fabricante>(fabricante, HttpStatus.OK);
     }
 
@@ -35,7 +36,7 @@ public class FabricanteController {
     @RequestMapping(value = "/fabricantes/{fabricanteID}", method = RequestMethod.DELETE)
     public ResponseEntity<Fabricante> deleteItem(@PathVariable(value = "fabricanteID") long fabricanteID) {
         Optional<Fabricante> response = repository.findById(fabricanteID);
-        
+
         if (response.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
