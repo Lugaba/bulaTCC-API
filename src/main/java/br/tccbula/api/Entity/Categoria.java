@@ -9,8 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "categoria")
@@ -22,7 +27,9 @@ public class Categoria {
     @Column(nullable = false, unique = true)
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "categoria_bula", joinColumns = @JoinColumn(name = "categoria_id"), inverseJoinColumns = @JoinColumn(name = "bula_id"))
     private List<Bula> bulas;
 
     public long getId() {
@@ -41,13 +48,21 @@ public class Categoria {
         this.nome = nome;
     }
 
+    public List<Bula> getBulas() {
+        return bulas;
+    }
+
+    public void setBulas(List<Bula> bulas) {
+        this.bulas = bulas;
+    }
+
     public void addBula(Bula bula) {
         bulas.add(bula);
-        bula.setCategoria(this);
+        bula.getCategorias().add(this);
     }
 
     public void removeBula(Bula bula) {
         bulas.remove(bula);
-        bula.setCategoria(null);
+        bula.getCategorias().remove(this);
     }
 }

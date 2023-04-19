@@ -1,7 +1,9 @@
 package br.tccbula.api.Entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
 
 @Entity
 @Table(name = "bula")
@@ -43,9 +47,8 @@ public class Bula {
     @JoinColumn(name = "fabricante_id")
     private Fabricante fabricante;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    @ManyToMany(mappedBy = "bulas")
+    private List<Categoria> categorias;
 
     public long getId() {
         return id;
@@ -83,8 +86,8 @@ public class Bula {
         return fabricante;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public List<Categoria> getCategorias() {
+        return categorias;
     }
 
     public void setId(long id) {
@@ -123,7 +126,18 @@ public class Bula {
         this.fabricante = fabricante;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public void addCategoria(Categoria categoria) {
+        this.categorias.add(categoria);
+        categoria.getBulas().add(this);
+
+    }
+
+    public void removeCategoria(Categoria categoria) {
+        this.categorias.remove(categoria);
+        categoria.getBulas().remove(this);
     }
 }

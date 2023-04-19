@@ -2,7 +2,7 @@ package br.tccbula.api.DTO;
 
 import java.util.ArrayList;
 
-public class BulaDTO {
+public class BulaDTOPost {
     private long id;
     private String nome;
     private String indicacao;
@@ -11,15 +11,10 @@ public class BulaDTO {
     private String efeitosColaterais;
     private ArrayList<String> imagesURL;
     private String bulaCompletaURL;
-    private fabricanteDTO fabricante;
-    private ArrayList<CategoriaDTO> categorias;
+    private ArrayList<Long> categoriasID;
 
     public String getBulaCompletaURL() {
         return bulaCompletaURL;
-    }
-
-    public ArrayList<CategoriaDTO> getCategorias() {
-        return categorias;
     }
 
     public String getContraindicacao() {
@@ -28,10 +23,6 @@ public class BulaDTO {
 
     public String getEfeitosColaterais() {
         return efeitosColaterais;
-    }
-
-    public fabricanteDTO getFabricante() {
-        return fabricante;
     }
 
     public long getId() {
@@ -58,20 +49,12 @@ public class BulaDTO {
         this.bulaCompletaURL = bulaCompletaURL;
     }
 
-    public void setCategorias(ArrayList<CategoriaDTO> categorias) {
-        this.categorias = categorias;
-    }
-
     public void setContraindicacao(String contraindicacao) {
         this.contraindicacao = contraindicacao;
     }
 
     public void setEfeitosColaterais(String efeitosColaterais) {
         this.efeitosColaterais = efeitosColaterais;
-    }
-
-    public void setFabricante(fabricanteDTO fabricante) {
-        this.fabricante = fabricante;
     }
 
     public void setId(long id) {
@@ -92,5 +75,13 @@ public class BulaDTO {
 
     public void setPosologia(String posologia) {
         this.posologia = posologia;
+    }
+
+    public ArrayList<Long> getCategoriasID() {
+        return categoriasID;
+    }
+
+    public void setCategoriasID(ArrayList<Long> categoriasID) {
+        this.categoriasID = categoriasID;
     }
 }

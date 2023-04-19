@@ -1,5 +1,6 @@
 package br.tccbula.api.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.tccbula.api.DTO.BulaDTO;
+import br.tccbula.api.DTO.BulaDTOPost;
 import br.tccbula.api.Entity.Bula;
 import br.tccbula.api.Entity.Categoria;
 import br.tccbula.api.Entity.Fabricante;
@@ -34,21 +36,37 @@ public class BulaController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    @RequestMapping(value = "fabricantes/{fabricanteID}/categorias/{categoriaID}/bulas", method = RequestMethod.POST)
-    public ResponseEntity<BulaDTO> createItem(@Valid @RequestBody Bula bula,
-            @PathVariable(value = "fabricanteID") long fabricanteID,
-            @PathVariable(value = "categoriaID") long categoriaID) {
+    @RequestMapping(value = "fabricantes/{fabricanteID}/bulas", method = RequestMethod.POST)
+    public ResponseEntity<BulaDTO> createItem(@Valid @RequestBody BulaDTOPost bulaDTO,
+            @PathVariable(value = "fabricanteID") long fabricanteID) {
         Fabricante fabricante = fabricanteRepository.getReferenceById(fabricanteID);
-        Categoria categoria = categoriaRepository.getReferenceById(categoriaID);
-        if (categoria != null && fabricante != null) {
-            bula.setCategoria(categoria);
+        if (fabricante != null) {
+            Bula bula = new Bula();
+            bula.setBulaCompletaURL(bulaDTO.getBulaCompletaURL());
+            bula.setContraindicacao(bulaDTO.getContraindicacao());
+            bula.setEfeitosColaterais(bulaDTO.getEfeitosColaterais());
+            bula.setImagesURL(bulaDTO.getImagesURL());
+            bula.setIndicacao(bulaDTO.getIndicacao());
+            bula.setNome(bulaDTO.getNome());
+            bula.setPosologia(bulaDTO.getPosologia());
             bula.setFabricante(fabricante);
-            System.out.print(bula.getFabricante());
+
+            ArrayList<Categoria> categorias = new ArrayList<>();
+            for (Long categoriaId : bulaDTO.getCategoriasID()) {
+                Optional<Categoria> categoriaOpt = categoriaRepository.findById(categoriaId);
+                if (categoriaOpt.isPresent()) {
+                    categorias.add(categoriaOpt.get());
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+            }
+            bula.setCategorias(categorias);
+
             repository.save(bula);
 
             ModelMapper modelMapper = new ModelMapper();
-            BulaDTO bulaDTO = modelMapper.map(bula, BulaDTO.class);
-            return new ResponseEntity<BulaDTO>(bulaDTO, HttpStatus.OK);
+            BulaDTO bulaDTO1 = modelMapper.map(bula, BulaDTO.class);
+            return new ResponseEntity<BulaDTO>(bulaDTO1, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
