@@ -47,7 +47,8 @@ public class Bula {
     @JoinColumn(name = "fabricante_id")
     private Fabricante fabricante;
 
-    @ManyToMany(mappedBy = "bulas")
+    @ManyToMany
+    @JoinTable(name = "bula_categoria", joinColumns = @JoinColumn(name = "bula_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;
 
     public long getId() {

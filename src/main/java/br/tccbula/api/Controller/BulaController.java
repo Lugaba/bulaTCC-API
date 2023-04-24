@@ -51,29 +51,30 @@ public class BulaController {
             bula.setPosologia(bulaDTO.getPosologia());
             bula.setFabricante(fabricante);
 
-            ArrayList<Categoria> categorias = new ArrayList<>();
-            for (Long categoriaId : bulaDTO.getCategoriasID()) {
-                Optional<Categoria> categoriaOpt = categoriaRepository.findById(categoriaId);
-                if (categoriaOpt.isPresent()) {
-                    categorias.add(categoriaOpt.get());
-                } else {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-                }
-            }
+            List<Categoria> categorias = categoriaRepository.findAllById(bulaDTO.getCategoriasID());
+
             bula.setCategorias(categorias);
 
-            repository.save(bula);
+            Bula novaBula = repository.save(bula);
 
             ModelMapper modelMapper = new ModelMapper();
-            BulaDTO bulaDTO1 = modelMapper.map(bula, BulaDTO.class);
+            BulaDTO bulaDTO1 = modelMapper.map(novaBula, BulaDTO.class);
             return new ResponseEntity<BulaDTO>(bulaDTO1, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "bulas", method = RequestMethod.GET)
-    public ResponseEntity<List<Bula>> getAllItems() {
-        return new ResponseEntity<List<Bula>>(repository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<BulaDTO>> getAllItems() {
+        ArrayList<BulaDTO> bulasDTO = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for (Bula bula : repository.findAll()) {
+            System.out.println(bula.getCategorias());
+            BulaDTO bulaDTO = modelMapper.map(bula, BulaDTO.class);
+            bulasDTO.add(bulaDTO);
+        }
+
+        return new ResponseEntity<List<BulaDTO>>(bulasDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "bulas/{bulaID}", method = RequestMethod.GET)

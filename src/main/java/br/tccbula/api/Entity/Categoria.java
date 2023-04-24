@@ -28,8 +28,7 @@ public class Categoria {
     private String nome;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "categoria_bula", joinColumns = @JoinColumn(name = "categoria_id"), inverseJoinColumns = @JoinColumn(name = "bula_id"))
+    @ManyToMany(mappedBy = "categorias")
     private List<Bula> bulas;
 
     public long getId() {
