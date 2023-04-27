@@ -25,22 +25,22 @@ public class Bula {
     @Column(nullable = false, unique = true)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String indicacao;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String posologia;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String contraindicacao;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String efeitosColaterais;
 
     @Column(nullable = false)
     private ArrayList<String> imagesURL;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String bulaCompletaURL;
 
     @ManyToOne
