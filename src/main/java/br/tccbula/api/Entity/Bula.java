@@ -3,7 +3,6 @@ package br.tccbula.api.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +36,7 @@ public class Bula {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String efeitosColaterais;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private ArrayList<String> imagesURL;
 
     @Column(nullable = false, columnDefinition = "TEXT")
