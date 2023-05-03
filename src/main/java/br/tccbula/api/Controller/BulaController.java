@@ -89,7 +89,7 @@ public class BulaController {
     @RequestMapping(value = "/bulas/{bulaID}", method = RequestMethod.DELETE)
     public ResponseEntity<Bula> deleteItem(@PathVariable(value = "bulaID") long bulaID) {
         Optional<Bula> response = repository.findById(bulaID);
-        if (response.isEmpty()) {
+        if (!response.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             repository.delete(response.get());

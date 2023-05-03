@@ -36,7 +36,7 @@ public class CategoriaController {
     @RequestMapping(value = "/categorias/{categoriaID}", method = RequestMethod.DELETE)
     public ResponseEntity<Categoria> deleteItem(@PathVariable(value = "categoriaID") long categoriaID) {
         Optional<Categoria> response = repository.findById(categoriaID);
-        if (response.isEmpty()) {
+        if (!response.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             repository.delete(response.get());

@@ -37,7 +37,7 @@ public class FabricanteController {
     public ResponseEntity<Fabricante> deleteItem(@PathVariable(value = "fabricanteID") long fabricanteID) {
         Optional<Fabricante> response = repository.findById(fabricanteID);
 
-        if (response.isEmpty()) {
+        if (!response.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             repository.delete(response.get());
