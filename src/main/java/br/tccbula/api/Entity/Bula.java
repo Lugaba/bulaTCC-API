@@ -37,7 +37,7 @@ public class Bula {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String efeitosColaterais;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private ArrayList<String> imagesURL;
 
     @Column(nullable = false, columnDefinition = "TEXT")
