@@ -38,7 +38,7 @@ public class Bula {
     private String efeitosColaterais;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private ArrayList<String> imagesURL;
+    private List<String> imagesURL;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String bulaCompletaURL;
@@ -79,7 +79,7 @@ public class Bula {
         return bulaCompletaURL;
     }
 
-    public ArrayList<String> getImagesURL() {
+    public List<String> getImagesURL() {
         return imagesURL;
     }
 
@@ -111,7 +111,7 @@ public class Bula {
         this.efeitosColaterais = efeitosColaterais;
     }
 
-    public void setImagesURL(ArrayList<String> imagesURL) {
+    public void setImagesURL(List<String> imagesURL) {
         this.imagesURL = imagesURL;
     }
 
