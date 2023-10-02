@@ -49,6 +49,7 @@ public class BulaController {
             bula.setIndicacao(bulaDTO.getIndicacao());
             bula.setNome(bulaDTO.getNome());
             bula.setPosologia(bulaDTO.getPosologia());
+            bula.setInteracoesMedicamentosas(bulaDTO.getInteracoesMedicamentosas());
             bula.setFabricante(fabricante);
 
             List<Categoria> categorias = categoriaRepository.findAllById(bulaDTO.getCategoriasID());

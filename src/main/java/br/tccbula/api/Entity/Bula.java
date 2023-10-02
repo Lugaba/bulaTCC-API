@@ -38,6 +38,9 @@ public class Bula {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String efeitosColaterais;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String interacoesMedicamentosas;
+
     @ElementCollection
     @Column(nullable = false)
     private List<String> imagesURL;
@@ -93,6 +96,10 @@ public class Bula {
         return categorias;
     }
 
+    public String getInteracoesMedicamentosas() {
+        return interacoesMedicamentosas;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -131,6 +138,10 @@ public class Bula {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public void setInteracoesMedicamentosas(String interacoesMedicamentosas) {
+        this.interacoesMedicamentosas = interacoesMedicamentosas;
     }
 
     public void addCategoria(Categoria categoria) {

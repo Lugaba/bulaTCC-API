@@ -9,6 +9,7 @@ public class BulaDTO {
     private String posologia;
     private String contraindicacao;
     private String efeitosColaterais;
+    private String interacoesMedicamentosas;
     private ArrayList<String> imagesURL;
     private String bulaCompletaURL;
     private fabricanteDTO fabricante;
@@ -54,6 +55,10 @@ public class BulaDTO {
         return posologia;
     }
 
+    public String getInteracoesMedicamentosas() {
+        return interacoesMedicamentosas;
+    }
+
     public void setBulaCompletaURL(String bulaCompletaURL) {
         this.bulaCompletaURL = bulaCompletaURL;
     }
@@ -92,5 +97,9 @@ public class BulaDTO {
 
     public void setPosologia(String posologia) {
         this.posologia = posologia;
+    }
+
+    public void setInteracoesMedicamentosas(String interacoesMedicamentosas) {
+        this.interacoesMedicamentosas = interacoesMedicamentosas;
     }
 }
